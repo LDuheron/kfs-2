@@ -6,7 +6,7 @@
 struct  gdt_segment_descriptor_struct {
     short   limit;
     short   base_1;
-    char    base_1;
+    char    base_2;
     char    access_byte;
     char    limit_2; //incorrect size
     char    flags; //
