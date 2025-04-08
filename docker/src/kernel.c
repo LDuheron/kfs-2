@@ -3,13 +3,13 @@
 #define VGA_HEIGHT 30
 #define VGA_WIDTH 80
 
-#if defined(__linux__)
-#error "You are not using a cross-compiler, you will most certainly run into trouble"
-#endif
+// #if defined(__linux__)
+// #error "You are not using a cross-compiler, you will most certainly run into trouble"
+// #endif
 
-#if !defined(__i386__)
-#error "This tutorial needs to be compiled with a ix86-elf compiler"
-#endif
+// #if !defined(__i386__)
+// #error "This tutorial needs to be compiled with a ix86-elf compiler"
+// #endif
 
 enum vga_color {
 	VGA_COLOR_BLACK = 0,

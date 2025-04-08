@@ -31,9 +31,6 @@ WORKDIR /home
 COPY ./inc ./inc
 COPY ./src ./src
 COPY ./scripts ./scripts
-# WORKDIR /home/src
-# RUN ./compile.sh
-# RUN ./makeiso.sh
 
 #RUN useradd -m -s /bin/bash developer
 #USER developer
