@@ -8,7 +8,7 @@
 // #endif
 
 // #if !defined(__i386__)
-// #error "KernAL is means to be run on i386 machines"
+// #error "KernAL is meant to be run on i386 machines"
 // #endif
 
 enum vga_color {
