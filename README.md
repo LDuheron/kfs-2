@@ -44,6 +44,15 @@ struct  gdt_segment_descriptor_struct {
 
 While **64-bit processors** typically rely on **paging** for memory management, **i386 (x86)** processors combine both **paging and GDT** to handle memory. The GDT defines the segments, whereas paging enables more advanced memory management techniques like virtual memory. This hybrid approach allows the **i386 architecture** to efficiently manage and protect memory while providing flexibility in how memory is accessed and organized. The size of the GDT can vary depending on the number of segments defined and the specific design of the operating system.
 
+### The Global Descriptor Table Register :   `GDTR`
+
+The **GDTR** stores the **base address** and the **size** of the **Global Descriptor Table (GDT)**. In our case, its address is fixed at `0x00000800`, as specified by the project. The GDTR helps the CPU locate the GDT and determines its size, ensuring that it doesn't access memory beyond the GDT's bounds.
+
+The GDTR is a **48-bit register**, consisting of two parts:
+
+1. **Base**: A **32-bit** value representing the address of the GDT in memory.
+2. **Limit**: A **16-bit** value representing the size of the GDT in **bytes minus 1**. For example, if the GDT contains 10 descriptors, each 8 bytes, the GDT's size is 80 bytes, but the value stored in the GDTR's limit would be **79** (80 - 1).
+
 ## Resources
 
 - OsDev Global descriptor table : https://wiki.osdev.org/Global_Descriptor_Table

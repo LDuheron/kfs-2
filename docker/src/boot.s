@@ -27,6 +27,9 @@ _start:
     /* Set up stack pointer for the kernel's stack */
 	mov $stack_top, %esp
 
+	/* Load the GDTR */
+	lgdt [gdtr]
+
     /* Call kernel main function from kernel.c */
 	call kernel_main
 
@@ -34,6 +37,13 @@ _start:
 	cli
 1:	hlt
 	jmp 1b
+
+/* Defining the Global Descriptor Table Register */
+gdtr:
+	/*Defining the size of the GDTR !!!!!!!! To change once we know the real size*/
+	.word 0x27
+	/*Defining the base address of the GDTR*/
+	.quad 0x00000800
 
 /* Defines the size of _start by calculating the
 difference between its curent location and its 
