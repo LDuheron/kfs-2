@@ -40,9 +40,9 @@ _start:
 
 /* Defining the Global Descriptor Table Register */
 gdtr:
-	/*Defining the size of the GDTR !!!!!!!! To change once we know the real size*/
+	/*Size of the GDT !!!!!!!! To change once we know the real size*/
 	.word 0x27
-	/*Defining the base address of the GDTR*/
+	/*Base address of the GDT*/
 	.quad 0x00000800
 
 /* Defines the size of _start by calculating the

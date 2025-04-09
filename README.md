@@ -46,12 +46,34 @@ While **64-bit processors** typically rely on **paging** for memory management, 
 
 ### The Global Descriptor Table Register :   `GDTR`
 
-The **GDTR** stores the **base address** and the **size** of the **Global Descriptor Table (GDT)**. In our case, its address is fixed at `0x00000800`, as specified by the project. The GDTR helps the CPU locate the GDT and determines its size, ensuring that it doesn't access memory beyond the GDT's bounds.
+The **GDTR** stores the **base address** and the **size** of the **Global Descriptor Table (GDT)**. In this case, its address is fixed at `0x00000800`, as specified by the project. The GDTR helps the CPU locate the GDT and determines its size, ensuring that it doesn't access memory beyond the GDT's bounds.
 
 The GDTR is a **48-bit register**, consisting of two parts:
 
 1. **Base**: A **32-bit** value representing the address of the GDT in memory.
 2. **Limit**: A **16-bit** value representing the size of the GDT in **bytes minus 1**. For example, if the GDT contains 10 descriptors, each 8 bytes, the GDT's size is 80 bytes, but the value stored in the GDTR's limit would be **79** (80 - 1).
+
+The GDTR is declared in the `boot.s` file. The `lgdt` instruction loads the GDTR to inform the CPU of the GDT’s location and size:
+
+```nasm
+	/* Loads the GDTR so the CPU can locate the GDT*/
+	lgdt [gdtr]
+```
+
+The following code defines the GDTR, specifying its size and base address.
+
+```nasm
+/* Defining the Global Descriptor Table Register */
+gdtr:
+	/*Size of the GDT*/
+	.word 0x27
+	/*Base address of the GDT*/
+	.quad 0x00000800
+
+```
+
+
+
 
 ## Resources
 
