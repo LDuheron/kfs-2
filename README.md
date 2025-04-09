@@ -22,11 +22,9 @@ make
 
 # Global descriptor table
 
-The **Global Descriptor Table (GDT)** is a data structure used by Intel processors to define characteristics of various memory areas, known as **segments**.
+The **Global Descriptor Table (GDT)** is a data structure used by Intel processors to define characteristics of various memory areas, known as **segments**, by storing descriptors that describe those segments.
 
-These segments contain crucial information, such as the **base address** (where the segment starts), the **limit** (the size of the segment), and **access rights** (permissions like read, write, or execute). This information helps the CPU manage and protect memory by enforcing access control on different areas.
-
-Each segment in the GDT is represented by a **descriptor**. A descriptor is a data structure that holds all the relevant information for a segment, allowing the CPU to interpret and manage the memory region associated with it. Specifically, the descriptor includes details like the segment's base address, size, and the segment's access rights.
+These descriptors contain crucial information, such as the **base address** (where the segment starts), the **limit** (the size of the segment), and **access rights** (permissions like read, write, or execute). This information helps the CPU manage and protect memory by enforcing access control on different areas.
 
 In our implementation, the structure of the segment descriptor is defined in the **gdt.h** file, as shown below:
 
