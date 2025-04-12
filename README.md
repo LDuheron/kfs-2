@@ -63,13 +63,13 @@ struct gdt_segment_descriptor_struct gdt_entries[7];
 
 ...
 
-  setGdtEntries(0, 0, 0, 0, 0);   // Null descriptor
-  setGdtEntries(1, 0, LIMIT, 0x9A, FLAG);   // Kernel Mode Code Segment
-  setGdtEntries(2, 0, LIMIT, 0x92, FLAG);   // Kernel Mode Data Segment
-  // setGdtEntries(3, 0, LIMIT, ?? , FLAG);   // Kernel Mode Stack Segment
-  setGdtEntries(4, 0, LIMIT, 0xFA, FLAG);  // User Mode Code Segment
-  setGdtEntries(5, 0, LIMIT, 0xF2, FLAG);  // User Mode Data Segment
-  // setGdtEntries(6, 0, LIMIT, ?? , FLAG);  // User Mode Stack Segment
+  setGdtEntries(0, 0, 0, 0, 0);   		// Null descriptor
+  setGdtEntries(1, 0, LIMIT, 0x9A, FLAG);	// Kernel Mode Code Segment
+  setGdtEntries(2, 0, LIMIT, 0x92, FLAG);   	// Kernel Mode Data Segment
+  // setGdtEntries(3, 0, LIMIT, ?? , FLAG);  	// Kernel Mode Stack Segment
+  setGdtEntries(4, 0, LIMIT, 0xFA, FLAG); 	// User Mode Code Segment
+  setGdtEntries(5, 0, LIMIT, 0xF2, FLAG);  	// User Mode Data Segment
+  // setGdtEntries(6, 0, LIMIT, ?? , FLAG); 	// User Mode Stack Segment
 ```
 
 We fill the GDT entries following the OsDev guidelines :
