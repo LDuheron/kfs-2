@@ -26,11 +26,11 @@ The **Global Descriptor Table (GDT)** is a data structure used by Intel processo
 
 These descriptors contain crucial information, such as the **base address** (where the segment starts), the **limit** (the size of the segment), and **access rights** (permissions like read, write, or execute). This information helps the CPU manage and protect memory by enforcing access control on different areas.
 
-In our implementation, the structure of the segment descriptor is defined in the **gdt.h** file, as shown below:
+In our implementation, the structure of the segment descriptor is defined in the **gdt.h** file from bottom to top, as shown below:
 
 ```c
 struct  gdt_segment_descriptor_struct {
-	short   limit;
+	short   limit_1;
 	short   base_1;
 	char    base_2;
 	char    access_byte;
@@ -43,6 +43,38 @@ struct  gdt_segment_descriptor_struct {
 **The GDT is specific to x86 processors.**
 
 While **64-bit processors** typically rely on **paging** for memory management, **i386 (x86)** processors combine both **paging and GDT** to handle memory. The GDT defines the segments, whereas paging enables more advanced memory management techniques like virtual memory. This hybrid approach allows the **i386 architecture** to efficiently manage and protect memory while providing flexibility in how memory is accessed and organized. The size of the GDT can vary depending on the number of segments defined and the specific design of the operating system.
+
+
+# Setting the GDT’s entries
+
+The global descriptor table entries are defined in the `gdt.c` file. The subject requires implementing 6 entries : 
+
+- Kernel Code segment
+- Kernel Data segment
+- Kernel stack segment
+- User code segment
+- User data segment
+- User stack segment
+
+However, we define 7 entries as the inclusion of a null descriptor is mandated by the standard:
+
+```c
+struct gdt_segment_descriptor_struct gdt_entries[7];
+
+...
+
+  setGdtEntries(0, 0, 0, 0, 0);   // Null descriptor
+  setGdtEntries(1, 0, LIMIT, 0x9A, FLAG);   // Kernel Mode Code Segment
+  setGdtEntries(2, 0, LIMIT, 0x92, FLAG);   // Kernel Mode Data Segment
+  // setGdtEntries(3, 0, LIMIT, ?? , FLAG);   // Kernel Mode Stack Segment
+  setGdtEntries(4, 0, LIMIT, 0xFA, FLAG);  // User Mode Code Segment
+  setGdtEntries(5, 0, LIMIT, 0xF2, FLAG);  // User Mode Data Segment
+  // setGdtEntries(6, 0, LIMIT, ?? , FLAG);  // User Mode Stack Segment
+```
+
+We fill the GDT entries following the OsDev guidelines :
+
+![GDT Entries documentation](./img/32_bit_segment_content.png)
 
 ### The Global Descriptor Table Register :   `GDTR`
 
@@ -71,8 +103,6 @@ gdtr:
 	.quad 0x00000800
 
 ```
-
-
 
 
 ## Resources
