@@ -1,15 +1,15 @@
-global writeGdtToRegisters
+.global writeGdtToRegisters
 
 writeGdtToRegisters:
-	MOV eax, [esp + 4]
-	LGDT[eax]
+	MOV AX, [esp + 4]
+	LGDT [eax]
 	
-	MOV eax, 0x10
-	MOV ds, ax
-	MOV es, ax
-	MOV fs, ax
-	MOV gs, ax
-	MOV ss, ax
+	MOV AX, 0x10
+	MOV DS, AX
+	MOV ES, AX
+	MOV FS, AX
+	MOV GS, AX
+	MOV SS, AX
 	JMP 0x08:.setCs
 .setCs:
 	RET

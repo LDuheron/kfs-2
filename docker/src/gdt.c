@@ -2,6 +2,8 @@
 #include "../inc/stddef.h"
 #include "../inc/gdt.h"
 
+extern void writeGdtToRegisters(struct gdt_ptr_struct*);
+
 struct gdt_segment_descriptor_struct gdt_entries[7];
 struct gdt_ptr_struct gdt_ptr;
 
