@@ -6,7 +6,7 @@
 /*   By: athierry <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:51:24 by athierry          #+#    #+#             */
-/*   Updated: 2025/04/22 19:09:04 by athierry         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:15:20 by athierry         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ struct  gdt_segment_descriptor_struct {
 }__attribute__((packed));
 
 struct  gdt_ptr_struct {
-    short           limit;
     unsigned int    base;
+    short           limit;
 }__attribute__((packed));
 
-static void initGdt();
-static void setGdtEntries(int index, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity);
+void initGdt();
+
+extern void writeGdtToRegisters(struct gdt_ptr_struct*);
 #endif

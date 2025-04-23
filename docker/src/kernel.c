@@ -80,5 +80,6 @@ void terminal_writestring(const char* data) {
 void    kernel_main(void)
 {
     terminal_initialize();
+    initGdt();
     terminal_writestring("42");
 }

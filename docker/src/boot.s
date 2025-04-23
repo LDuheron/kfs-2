@@ -28,7 +28,7 @@ _start:
 	mov $stack_top, %esp
 
 	/* Load the GDTR */
-	call initGdt
+/*	call initGdt */
 
     /* Call kernel main function from kernel.c */
 	call kernel_main
