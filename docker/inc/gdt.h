@@ -6,7 +6,7 @@
 /*   By: athierry <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:51:24 by athierry          #+#    #+#             */
-/*   Updated: 2025/04/23 18:15:20 by athierry         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:13:47 by athierry         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@
 #define DATA_MODE 0x02
 
 struct  gdt_segment_descriptor_struct {
-    short   limit_1;
-    short   base_1;
-    char    base_2;
-    char    access_byte;
-    char    flags;
-    char    base_3;
+    uint16_t   limit;
+    uint16_t   baseLow;
+    uint8_t    baseMid;
+    uint8_t    accessByte;
+    uint8_t    flags;
+    uint8_t    baseHigh;
 }__attribute__((packed));
 
 struct  gdt_ptr_struct {
-    unsigned int    base;
-    short           limit;
+    uint16_t	limit;
+    uint32_t	base;
 }__attribute__((packed));
 
 void initGdt();

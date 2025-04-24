@@ -1,6 +1,7 @@
 #include "../inc/stdint.h"
 #include "../inc/stddef.h"
 #include "../inc/gdt.h"
+#include "stackPrinter.h"
 
 #define VGA_HEIGHT 30
 #define VGA_WIDTH 80
@@ -43,21 +44,21 @@ static inline uint16_t vga_entry(unsigned char c, uint8_t color) {
 size_t terminal_row = 0;
 size_t terminal_column = 0;
 uint8_t terminal_color;
-uint16_t* terminal_buffer = (uint16_t*) 0xB8000;
+uint16_t* terminalBuffer = (uint16_t*) 0xB8000;
 
 void terminal_initialize(void) {
     terminal_color = vga_entry_color(VGA_WHITE, VGA_BLACK);
     for (size_t y = 0; y < VGA_HEIGHT; y++) {
         for (size_t x = 0; x < VGA_WIDTH; x++) {
             const size_t index = y * VGA_WIDTH + x;
-            terminal_buffer[index] = vga_entry(' ', terminal_color);
+            terminalBuffer[index] = vga_entry(' ', terminal_color);
         }
     }
 }
 
 void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
     const size_t index = y * VGA_WIDTH + x;
-    terminal_buffer[index] = vga_entry(c, color);
+    terminalBuffer[index] = vga_entry(c, color);
 }
 
 void terminal_putchar(char c) 
@@ -79,7 +80,10 @@ void terminal_writestring(const char* data) {
 
 void    kernel_main(void)
 {
+	char str[] = "hello World";
+
+
     terminal_initialize();
     initGdt();
-    terminal_writestring("42");
+    writeStackToVga((void *)0x00100000, 1000, terminalBuffer);
 }
