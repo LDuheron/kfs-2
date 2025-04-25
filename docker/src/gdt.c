@@ -25,13 +25,13 @@ void initGdt() {
     gdt_ptr.base = (unsigned int) &gdt_entries;
 
     setGdtEntries(0, 0, 0, 0, 0);
-    setGdtEntries(1, 0, LIMIT, KERNEL_MODE | CODE_MODE, FLAG);
-    setGdtEntries(2, 0, LIMIT, KERNEL_MODE | DATA_MODE, FLAG);
-    setGdtEntries(3, 0, LIMIT, KERNEL_MODE | DATA_MODE, FLAG); // Kernel Mode Stack Segment
+    setGdtEntries(1, 0, LIMIT, KERNEL_MODE | CODE_MODE, FLAG); // Kernel code
+    setGdtEntries(2, 0, LIMIT, KERNEL_MODE | DATA_MODE, FLAG); // Kernel data
+    setGdtEntries(3, 0, LIMIT, KERNEL_MODE | DATA_MODE, FLAG); // Kernel stack
 
-    setGdtEntries(4, 0, LIMIT, USER_MODE | CODE_MODE, FLAG);
-    setGdtEntries(5, 0, LIMIT, USER_MODE | DATA_MODE, FLAG);
-    setGdtEntries(6, 0, LIMIT, USER_MODE | DATA_MODE, FLAG); // User Mode Stack Segment
+    setGdtEntries(4, 0, LIMIT, USER_MODE | CODE_MODE, FLAG); // User code
+    setGdtEntries(5, 0, LIMIT, USER_MODE | DATA_MODE, FLAG); // User data
+    setGdtEntries(6, 0, LIMIT, USER_MODE | DATA_MODE, FLAG); // User stack
 
     writeGdtToRegisters(&gdt_ptr);
 }

@@ -40,8 +40,8 @@ _start:
 
 /* Defining the Global Descriptor Table Register */
 gdtr:
-	/*Size of the GDT !!!!!!!! To change once we know the real size*/
-	.word 0x27
+	/*Size of the GDT ((7 entries * 8 bytes) - 1)*/
+	.word 0x37
 	/*Base address of the GDT*/
 	.quad 0x00000800
 

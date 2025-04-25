@@ -30,14 +30,13 @@ In our implementation, the structure of the segment descriptor is defined in the
 
 ```c
 struct  gdt_segment_descriptor_struct {
-	short   limit_1;
-	short   base_1;
-	char    base_2;
-	char    access_byte;
-	char    limit_2;
-	char    flags; 
-	char    base_3;
-};
+	short   limit;
+	short   baseLow;
+	char    baseMid;
+	char    accessByte;
+	char    flags;
+	char    baseHigh;
+};__attribute__((packed));
 ```
 
 **The GDT is specific to x86 processors.**
@@ -59,18 +58,22 @@ The global descriptor table entries are defined in the `gdt.c` file. The subject
 However, we define 7 entries as the inclusion of a null descriptor is mandated by the standard:
 
 ```c
-struct gdt_segment_descriptor_struct gdt_entries[7];
+void initGdt() {
+	gdt_ptr.limit = (sizeof(struct gdt_segment_descriptor_struct) * 7) - 1;
+	gdt_ptr.base = (unsigned int) &gdt_entries;
 
-...
-
-  setGdtEntries(0, 0, 0, 0, 0);   		// Null descriptor
-  setGdtEntries(1, 0, LIMIT, 0x9A, FLAG);	// Kernel Mode Code Segment
-  setGdtEntries(2, 0, LIMIT, 0x92, FLAG);   	// Kernel Mode Data Segment
-  // setGdtEntries(3, 0, LIMIT, ?? , FLAG);  	// Kernel Mode Stack Segment
-  setGdtEntries(4, 0, LIMIT, 0xFA, FLAG); 	// User Mode Code Segment
-  setGdtEntries(5, 0, LIMIT, 0xF2, FLAG);  	// User Mode Data Segment
-  // setGdtEntries(6, 0, LIMIT, ?? , FLAG); 	// User Mode Stack Segment
+	setGdtEntries(0, 0, 0, 0, 0);
+	setGdtEntries(1, 0, LIMIT, KERNEL_MODE | CODE_MODE, FLAG);
+	setGdtEntries(2, 0, LIMIT, KERNEL_MODE | DATA_MODE, FLAG);
+	setGdtEntries(3, 0, LIMIT, KERNEL_MODE | DATA_MODE, FLAG); //Kernel Mode Stack Segment
+    setGdtEntries(4, 0, LIMIT, USER_MODE | CODE_MODE, FLAG);
+    setGdtEntries(5, 0, LIMIT, USER_MODE | DATA_MODE, FLAG);
+    setGdtEntries(6, 0, LIMIT, USER_MODE | DATA_MODE, FLAG); // User Mode Stack Segment
+    writeGdtToRegisters(&gdt_ptr);
+   }
 ```
+
+The reason for separating segments in the GDT is **protection** and **security**. In a modern system, **kernel mode** (privileged mode) has **full access** to all resources and can directly manipulate hardware, memory, and system data. On the other hand, **user mode** (non-privileged mode) has restricted access to prevent malicious or faulty applications from interfering with the kernel or accessing sensitive system data. By separating these segments, the GDT ensures that **user code** cannot accidentally or intentionally modify **kernel memory** or escalate its privileges, maintaining system stability and security.
 
 We fill the GDT entries following the OsDev guidelines :
 
@@ -98,12 +101,11 @@ The following code defines the GDTR, specifying its size and base address.
 /* Defining the Global Descriptor Table Register */
 gdtr:
 	/*Size of the GDT*/
-	.word 0x27
+	.word 0x55
 	/*Base address of the GDT*/
 	.quad 0x00000800
 
 ```
-
 
 ## Resources
 
