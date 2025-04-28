@@ -17,6 +17,7 @@
 .align 16
 stack_bottom:
 .skip 16384 # 16 KiB
+.global stack_top
 stack_top:
 
 /* Kernel entrypoint specified by linker script */

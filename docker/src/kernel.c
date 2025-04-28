@@ -78,6 +78,7 @@ void terminal_writestring(const char* data) {
     }
 }
 
+extern void * stack_top;
 void    kernel_main(void)
 {
 	char str[] = "hello World";
@@ -85,5 +86,5 @@ void    kernel_main(void)
 
     terminal_initialize();
     initGdt();
-    writeStackToVga((void *)0x00100000, 1000, terminalBuffer);
+    writeStackToVga((void *)stack_top, 1000, terminalBuffer);
 }
