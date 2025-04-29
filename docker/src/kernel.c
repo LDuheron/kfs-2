@@ -85,6 +85,6 @@ void    kernel_main(void)
 
     terminal_initialize();
     initGdt();
-    //writeStackToVga((void *)&i, 1000, terminalBuffer);
-    writeStackToVga((void *)stack_top, 1000, terminalBuffer);
+    writeStackToVga((void *)&i, 1000, terminalBuffer);
+    //writeStackToVga((void *)stack_top, 1000, terminalBuffer);
 }
