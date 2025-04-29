@@ -81,10 +81,10 @@ void terminal_writestring(const char* data) {
 extern void * stack_top;
 void    kernel_main(void)
 {
-	char str[] = "hello World";
-
+	char i[] = "42";
 
     terminal_initialize();
     initGdt();
+    //writeStackToVga((void *)&i, 1000, terminalBuffer);
     writeStackToVga((void *)stack_top, 1000, terminalBuffer);
 }

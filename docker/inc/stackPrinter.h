@@ -6,7 +6,7 @@
 /*   By: athierry <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:03:46 by athierry          #+#    #+#             */
-/*   Updated: 2025/04/28 20:08:28 by athierry         ###   ########.fr       */
+/*   Updated: 2025/04/29 20:46:05 by athierry         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 #define VGA_LENGTH 20
 #define VGA_BUFFER_SIZE (VGA_WIDTH * VGA_LENGTH)
 #define VGAWHITE 0x0f
+#define VGARED 0x04
+#define VGAGREEN 0x02
 
-#define INT16REPLENGTH 6
+#define INT16REPLENGTH 9
 #define LINESIZE 16
 
 #define TRANS_VGA(x) ((x) | VGAWHITE << 8)
